@@ -10,6 +10,7 @@ class RoutingTableRow:
     gateway: str
     metric: int
     mask: hex
+    is_default_gateway: bool = False
 
 
 ROUTING_TABLE_PATH = "/proc/net/route"
@@ -52,6 +53,7 @@ def best_route(routing_table: List[RoutingTableRow], target_ip: hex) -> RoutingT
                     best_route = route
 
     if best_route == EMPTY_ROUTE:
+        default_gateway.is_default_gateway = True
         return default_gateway
     return best_route
 
